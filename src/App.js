@@ -1,23 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
+import Button from './Button';
 
 function App() {
+
+  const handleClick = () => {
+    console.log('Button clicked')
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="display">0</div>
+      <div className="buttons">
+        <Button value='C'  handleClick={handleClick}/>
+        <Button value='±' type='function' handleClick={handleClick}/>
+        <Button value='÷' type='function' handleClick={handleClick}/>
+        <Button value='x' type='function' handleClick={handleClick}/>
+        <Button value='7' handleClick={handleClick}/>
+        <Button value='8' handleClick={handleClick}/>
+        <Button value='9' handleClick={handleClick}/>
+        <Button value='-' type='function' handleClick={handleClick}/>
+        <Button value='4' handleClick={handleClick}/>
+        <Button value='5' handleClick={handleClick}/>
+        <Button value='6' handleClick={handleClick}/>
+        <Button value='+' type='function' handleClick={handleClick}/>
+        <Button value='1' handleClick={handleClick}/>
+        <Button value='2' handleClick={handleClick}/>
+        <Button value='3' handleClick={handleClick}/>
+        <Button value='=' type='function' handleClick={handleClick}/>
+        <Button value='0' handleClick={handleClick}/>
+        <Button value='.' handleClick={handleClick}/>
+        <Button value='%' handleClick={handleClick}/>
+        
+      </div>
     </div>
   );
 }
