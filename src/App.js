@@ -169,7 +169,7 @@ function App() {
   return (
     <div className="App">
       <div
-        className={`display ${display.length >= 8 ? 'reduce' : ''}`}
+        className={`display ${display.length >= 8 ? 'reduce' : ''} ${display.length >= 17 ? 'reduce-more' : ''}`}
       >{`${parseFloat(Number(display).toFixed(4))}`}</div>
       <div className="buttons">
         <Button value="C" handleClick={compute} />
