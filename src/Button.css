@@ -8,6 +8,8 @@
   cursor: pointer;
   outline-width: 0;
   transition: filter .25s;
+
+box-shadow: inset -1px 3px 8px 5px #f2a733, 2px 5px 16px 0px #222120, 5px 5px 15px 5px rgba(51,51,51,0);
 }
 
 @media (hover: hover) {
@@ -22,9 +24,11 @@
 
 .button.function {
   background-color: #333;
+  box-shadow: inset -1px 3px 8px 5px #333, 2px 5px 16px 0px #222120, 5px 5px 15px 5px rgba(51,51,51,0);
 }
 
 .button.cancel {
+  box-shadow: inset -1px 3px 8px 5px #eb574e, 2px 5px 16px 0px #222120, 5px 5px 15px 5px rgba(51,51,51,0);
   background-color: #eb574e;
 }
 
