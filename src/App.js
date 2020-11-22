@@ -8,7 +8,7 @@ function App() {
   const [operator, setOperator] = useState(null);
   //times used to store previous state if 2 operators are pressed consecutively
   const [times, setTimes] = useState(null);
-  // const [showPressed, setShowPressed] = useState('');
+  const [showPressed, setShowPressed] = useState('');
 
   const compute = (value) => () => {
     const displayNumber = Number(display);
@@ -17,6 +17,7 @@ function App() {
       // Cancel functionality
       case 'C':
         setDisplay('0');
+        setShowPressed('')
         setPreviousValue(null);
         setOperator(null);
         break;
@@ -26,21 +27,28 @@ function App() {
         setDisplay(`${displayNumber / 100}`);
         setPreviousValue(null);
         setOperator(null);
+        setShowPressed(`${displayNumber / 100}`)
         break;
 
       // ± functionality
       case '±':
         setDisplay(`${displayNumber * -1}`);
+        setShowPressed(`${displayNumber * -1}`);
         break;
 
       // Append . functionality
       case '.':
         if (display.includes('.')) return;
         setDisplay(display + '.');
+        setShowPressed(`${showPressed}${value}`);
         break;
 
       // Addition functionality
       case '+':
+        setShowPressed(`${showPressed}+`)
+        if(showPressed[showPressed.length - 1] === '=') {
+          setShowPressed(`${display}${value}`)
+        }
         if (operator !== null) {
           //  if plus is pressed after another operator, set operator to plus
           if (operator.length >= 2) {
@@ -74,6 +82,10 @@ function App() {
 
       // Subtract functionality
       case '-':
+        setShowPressed(`${showPressed}-`)
+        if(showPressed[showPressed.length - 1] === '=') {
+          setShowPressed(`${display}${value}`)
+        }
         if (operator !== null) {
           if (operator === '+') {
             //if prev operator is plus and minus is pressed set operator to minus. => 5 + - 3 = 2
@@ -99,6 +111,10 @@ function App() {
 
       // Multiply functionality
       case 'x':
+        setShowPressed(`${showPressed}x`)
+        if(showPressed[showPressed.length - 1] === '=') {
+          setShowPressed(`${display}${value}`)
+        }
         if (operator !== null) {
           if (operator === '+') {
             setOperator('*');
@@ -120,6 +136,10 @@ function App() {
 
       // Divide functionality
       case '÷':
+        setShowPressed(`${showPressed}÷`)
+        if(showPressed[showPressed.length - 1] === '=') {
+          setShowPressed(`${display}${value}`)
+        }
         if (operator !== null) {
           if (operator === '+') {
             setPreviousValue(previousValue + displayNumber);
@@ -140,6 +160,7 @@ function App() {
 
       // Equal to functionality
       case '=':
+        setShowPressed('=')
         if (!operator) return;
 
         if (operator === '+') {
@@ -160,17 +181,37 @@ function App() {
       default:
         if (display[display.length - 1] === '.') {
           setDisplay(display + value);
+          
         } else {
           setDisplay(`${Number(display + Number(value))}`);
+          setShowPressed(`${showPressed}${value}`);
         }
-    }
-  };
-
+        if(showPressed[showPressed.length - 1] === '+') {
+          setShowPressed(showPressed + value)
+        }
+        if(showPressed[showPressed.length - 1] === '-') {
+          setShowPressed(`${showPressed}${value}`)
+        }
+        if(showPressed[showPressed.length - 1] === 'x') {
+          setShowPressed(`${showPressed}${value}`)
+        }
+        if(showPressed[showPressed.length - 1] === '÷') {
+          setShowPressed(`${showPressed}${value}`)
+        }
+        if(showPressed[showPressed.length - 1] === '.') {
+          setShowPressed(`${showPressed}${value}`)
+          
+        }
+        
+      }
+      
+    };
+    
   return (
     <div className="App">
       <div
-        className={`display ${display.length >= 8 ? 'reduce' : ''} ${display.length >= 17 ? 'reduce-more' : ''}`}
-      >{`${parseFloat(Number(display).toFixed(4))}`}</div>
+        className={`display ${display.length >= 8 ? 'reduce' : ''} ${showPressed.length >= 8 ? 'reduce' : ''} ${display.length >= 17 ? 'reduce-more' : ''} ${showPressed.length >= 17 ? 'reduce-more' : ''}`}
+      >{!showPressed.includes('=') ? showPressed : `${parseFloat(Number(display).toFixed(4))}`}</div>
       <div className="buttons">
         <Button value="C" handleClick={compute} />
         <Button value="±" type="function" handleClick={compute} />
