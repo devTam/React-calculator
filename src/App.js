@@ -39,14 +39,22 @@ function App() {
       // Append . functionality
       case '.':
         if (display.includes('.')) return;
-        setDisplay(display + '.');
-        setShowPressed(`${showPressed}${value}`);
+        // if last pressed is = and . is pressed reset all values and start a new operation
+        if(showPressed[showPressed.length -1] === '=') {
+          setDisplay('0' + value);
+          setShowPressed( '0' + value)
+          setPreviousValue(null);
+          setOperator(null);
+        }else {
+          setDisplay(display + '.');
+          setShowPressed(`${showPressed}${value}`);
+        }
         break;
 
       // Addition functionality
       case '+':
         setShowPressed(`${showPressed}+`)
-        if(showPressed[showPressed.length - 1] === '=') {
+        if (showPressed[showPressed.length - 1] === '=') {
           setShowPressed(`${display}${value}`)
         }
         if (operator !== null) {
@@ -83,7 +91,7 @@ function App() {
       // Subtract functionality
       case '-':
         setShowPressed(`${showPressed}-`)
-        if(showPressed[showPressed.length - 1] === '=') {
+        if (showPressed[showPressed.length - 1] === '=') {
           setShowPressed(`${display}${value}`)
         }
         if (operator !== null) {
@@ -112,7 +120,7 @@ function App() {
       // Multiply functionality
       case 'x':
         setShowPressed(`${showPressed}x`)
-        if(showPressed[showPressed.length - 1] === '=') {
+        if (showPressed[showPressed.length - 1] === '=') {
           setShowPressed(`${display}${value}`)
         }
         if (operator !== null) {
@@ -137,7 +145,7 @@ function App() {
       // Divide functionality
       case '÷':
         setShowPressed(`${showPressed}÷`)
-        if(showPressed[showPressed.length - 1] === '=') {
+        if (showPressed[showPressed.length - 1] === '=') {
           setShowPressed(`${display}${value}`)
         }
         if (operator !== null) {
@@ -181,32 +189,38 @@ function App() {
       default:
         if (display[display.length - 1] === '.') {
           setDisplay(display + value);
-          
+
         } else {
           setDisplay(`${Number(display + Number(value))}`);
           setShowPressed(`${showPressed}${value}`);
         }
-        if(showPressed[showPressed.length - 1] === '+') {
+        if (showPressed[showPressed.length - 1] === '+') {
           setShowPressed(showPressed + value)
         }
-        if(showPressed[showPressed.length - 1] === '-') {
+        if (showPressed[showPressed.length - 1] === '-') {
           setShowPressed(`${showPressed}${value}`)
         }
-        if(showPressed[showPressed.length - 1] === 'x') {
+        if (showPressed[showPressed.length - 1] === 'x') {
           setShowPressed(`${showPressed}${value}`)
         }
-        if(showPressed[showPressed.length - 1] === '÷') {
+        if (showPressed[showPressed.length - 1] === '÷') {
           setShowPressed(`${showPressed}${value}`)
         }
-        if(showPressed[showPressed.length - 1] === '.') {
+        if (showPressed[showPressed.length - 1] === '.') {
           setShowPressed(`${showPressed}${value}`)
-          
         }
-        
-      }
-      
-    };
-    
+        if (showPressed[showPressed.length - 1] === '=') {
+          // if last pressed is = and a number is pressed reset all values and start a new operation
+          setDisplay(value);
+          setShowPressed(value)
+          setPreviousValue(null);
+          setOperator(null);
+        }
+
+    }
+
+  };
+
   return (
     <div className="App">
       <div
